@@ -1,5 +1,11 @@
 <?php
 
+function readArr($arr) {
+    echo "<pre>";
+    print_r($arr);
+    echo "</pre>";
+}
+
 function echoLog($data, $isDie = true) {
     if (is_array($data)) {
         echo json_encode($data);

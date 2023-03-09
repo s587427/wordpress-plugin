@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Plugin Name: My Plugin
- * Description: This is my first WordPress plugin.
- * Version: 1.0.0
+ * Plugin Name: excelUpload
+ * Description: Excel新增Woocommerce商品
+ * Version: 0.1.0
  **/
 
 require_once __DIR__ . "/utility.php";
-require_once __DIR__ . "/my-ajax.php";
+require_once __DIR__ . "/ajax.php";
 
 // 選單
 add_action("admin_menu", "uploadExcel");
@@ -33,13 +33,19 @@ function getUploadExcelPages($ver = "v2") {
       loadScriptAndStylesheet();
       // getSkus();
       // delProducts(getProducts());
-      test();
+      // test();
     };
   }
 }
 
 
 
+
+function updateVariation($variationId) {
+  $variation = new WC_Product_Variation($variationId);
+  $variation->set_attributes(array("顏色" => "blue", "大小" => "S"));
+  $variation->save();
+}
 
 
 function test() {
@@ -50,7 +56,8 @@ function test() {
       $variations = $product->get_available_variations();
       foreach ($variations as $variation) {
         $variation_product = wc_get_product($variation['variation_id']);
-        echo $variation_product->get_sku() . "<br/>";
+        echo "商品id: " . $variation_product->get_id() . " sku: " . $variation_product->get_sku() . "<br/>";
+        // echo $variation_product->readArr(get_class_methods($variation_product));
       }
     }
   }
@@ -69,8 +76,6 @@ function test() {
 //   // readArr($product->get_products());
 //   return $product->get_products();
 // }
-
-
 
 
 function getSkus() {
@@ -92,14 +97,6 @@ function getSkus() {
       echo $sku . '<br>';
     }
   }
-}
-
-
-
-function readArr($arr) {
-  echo "<pre>";
-  print_r($arr);
-  echo "</pre>";
 }
 
 
