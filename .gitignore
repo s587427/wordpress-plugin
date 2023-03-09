@@ -1,0 +1,6 @@
+# ignore composer.lock
+composer.lock
+
+# ignore vendor
+
+vendor
